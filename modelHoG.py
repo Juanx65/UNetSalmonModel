@@ -5,6 +5,7 @@ import sklearn.metrics as metrics
 from os import listdir
 import matplotlib.pyplot as plt
 import seaborn as sns
+import time
 
 orientations = 10
 ppc = (16,16)					# pixels per cell
@@ -98,7 +99,7 @@ def main(debug=False):
 	#template_path = 'data/salmones/train/label'
 
 	# Templates
-	class_names = ['salmon1','salmon2','salmon3','salmon4','salmon6','salmon7','salmon8','salmon9','salmon10','salmon11']
+	class_names = ['salmon1','salmon2','salmon3','salmon4','salmon5','salmon6','salmon7','salmon8','salmon9','salmon10','salmon11']
 
 	list_img = list()	# lista imagenes template1
 	list_img2 = list()	# lista imagenes template2
@@ -108,6 +109,9 @@ def main(debug=False):
 		files = listdir(template_path)
 		list_img.append( cv.imread(template_path+'/'+files[0]) )
 		list_img2.append( cv.imread(template_path+'/'+files[1]) )
+
+	# Start time
+	t0 = time.time()
 
 	# Calculo de los HoG de referencia
 	HoG = getTemplateHoG(list_img)
@@ -128,16 +132,14 @@ def main(debug=False):
 			testing_set.append( img )
 			y.append(i)
 
-	
-
 	# Evaluate
 	y_hat = list()		# predictions
 	for img in testing_set:
 		y_hat.append( evaluateHoG2(img, HoG, HoG2) )	# evaluar con 2 templates
 
-	print(y)
-	print(y_hat)
-
+	#print(y)
+	#print(y_hat)
+	print("--- %s seconds ---" % (time.time() - t0))
 	accuracy = metrics.accuracy_score(y, y_hat)
 
 	print('Accuracy = %.3f%%' % (accuracy*100))
