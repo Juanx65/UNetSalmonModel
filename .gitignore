@@ -1,3 +1,4 @@
 env/
 *.hdf5
 weights/
+__pycache__/

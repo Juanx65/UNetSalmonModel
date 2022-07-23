@@ -68,8 +68,10 @@ Where `--data_dir` is the path to the dataset to test and  `--weights` is the pa
 
 # TRAIN
 
-The model is trained for 5 epochs.
+To train the model, use the following example as a guide:
 
-After 5 epochs, calculated accuracy is about 0.97.
+```
+python train.py --epochs 10 --step_per_epoch 300 --data data/salmones/train --save weights/best.hdf5
+```
 
-Loss function for the training is basically just a binary crossentropy.
+Where --save saves best.ckpt in the weights folder, monitoring the loss of the model.
