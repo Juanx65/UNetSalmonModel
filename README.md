@@ -31,9 +31,7 @@ pip install -r requirements.txt
 
 For this project we use the ROI images from our previous work in [ConvSalmonModel](https://github.com/Juanx65/ConvSalmonModel), in which we extract a section of the tarject salmon where the dots are more likely to be present and detected. You can find the dataset in folder `data/salmones`.
 
-To create the labels for the UNet, we use program present in the folder `data_preparation`, where we use an adaptative threshold to binarise the dots, and then we make a manual finetune of the binary results.
-
-The original dataset is from [isbi challenge](http://brainiac2.mit.edu/isbi_challenge/).
+To create the labels for the UNet, we use the program present in the folder `data_preparation`, where we use an adaptative threshold to binarise the dots, and then we make a manual finetune of the binary results.
 
 ### Data augmentation
 
@@ -53,9 +51,9 @@ makes sure that mask pixels are in \[0, 1\] range.
 # TEST
 To test the model, use the following example as a guide:
 ```
-python test.py --data_dir 'rois_tests/' --weights '/checkpoints/best.ckpt'
+python eval.py --data data/salmones/test --results data/salmones/test --weights /weights/best.hdf5
 ```
-Where `--data_dir` is the path to the dataset to test and  `--weights` is the path to the checkpoints (trained weights of the model).
+Where `--data` is the path to the dataset to test and  `--weights` is the path to the checkpoints (trained weights of the model).
 
 ###### `test.py` will display the confusion matrix of a given dataset for the checkpoints of the model.
 
@@ -74,4 +72,4 @@ To train the model, use the following example as a guide:
 python train.py --epochs 10 --step_per_epoch 300 --data data/salmones/train --save weights/best.hdf5
 ```
 
-Where --save saves best.ckpt in the weights folder, monitoring the loss of the model.
+Where --save saves best.hdf5 in the weights folder, monitoring the loss of the model.
