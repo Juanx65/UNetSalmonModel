@@ -13,14 +13,14 @@ def eval(opt):
     archivos = os.listdir(str(opt.data))
     testGene = testGenerator(opt.data)
     results = model.predict_generator(testGene,len(archivos),verbose=1)
-    saveResult("results/",results, archivos)
+    saveResult(opt.results,results, archivos)
 
     HoG()
 
 def parse_opt():
     parser = argparse.ArgumentParser()
     parser.add_argument('--data', default = "data/salmones/test_all",type=str,help='dir to the dataset')
-    parser.add_argument('--results', default = "data/salmones/test",type=str,help='dir to the dataset')
+    parser.add_argument('--results', default = "results/",type=str,help='dir to the dataset')
     parser.add_argument('--weights', default = "/weights/best.hdf5",type=str,help='File to save the weights of the model')
 
     opt = parser.parse_args()
