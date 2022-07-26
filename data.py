@@ -4,6 +4,7 @@ import numpy as np
 import os
 import glob
 import skimage.io as io
+import cv2 as cv
 import skimage.transform as trans
 
 Sky = [128,128,128]
@@ -82,9 +83,10 @@ def trainGenerator(batch_size,train_path,image_folder,mask_folder,aug_dict,image
 
 
 
-def testGenerator(test_path,num_image = 30,target_size = (256,256),flag_multi_class = False,as_gray = True):
-    for i in range(num_image):
-        img = io.imread(os.path.join(test_path,"%d.png"%i),as_gray = as_gray)
+def testGenerator(test_path,target_size = (256,256),flag_multi_class = False,as_gray = True):
+    archivos = os.listdir(str(test_path))
+    for arch in archivos:
+        img = io.imread(str(test_path+'/'+arch))
         img = img / 255
         img = trans.resize(img,target_size)
         img = np.reshape(img,img.shape+(1,)) if (not flag_multi_class) else img
@@ -97,7 +99,7 @@ def geneTrainNpy(image_path,mask_path,flag_multi_class = False,num_class = 2,ima
     image_arr = []
     mask_arr = []
     for index,item in enumerate(image_name_arr):
-        img = io.imread(item,as_gray = image_as_gray)
+        img = cv.imread(item,as_gray = image_as_gray)
         img = np.reshape(img,img.shape + (1,)) if image_as_gray else img
         mask = io.imread(item.replace(image_path,mask_path).replace(image_prefix,mask_prefix),as_gray = mask_as_gray)
         mask = np.reshape(mask,mask.shape + (1,)) if mask_as_gray else mask
@@ -118,7 +120,7 @@ def labelVisualize(num_class,color_dict,img):
 
 
 
-def saveResult(save_path,npyfile,flag_multi_class = False,num_class = 2):
+def saveResult(save_path,npyfile, archivos, flag_multi_class = False,num_class = 2):
     for i,item in enumerate(npyfile):
         img = labelVisualize(num_class,COLOR_DICT,item) if flag_multi_class else item[:,:,0]
-        io.imsave(os.path.join(save_path,"%d_predict.png"%i),img)
+        io.imsave(os.path.join(save_path,archivos[i]),img)

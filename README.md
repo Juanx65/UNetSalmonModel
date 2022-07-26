@@ -35,7 +35,7 @@ To create the labels for the UNet, we use the program present in the folder `dat
 
 ### Data augmentation
 
-The data for training contains 30 512*512 images, which are far not enough to feed a deep learning neural network. We use a module called ImageDataGenerator in `keras.preprocessing.image` to do data augmentation.
+The data for training contains 30 256*256 images, which are far not enough to feed a deep learning neural network. We use a module called ImageDataGenerator in `keras.preprocessing.image` to do data augmentation.
 
 See data.py for detail.
 
@@ -45,13 +45,13 @@ See data.py for detail.
 
 This deep neural network is implemented with Keras functional API, which makes it extremely easy to experiment with different interesting architectures.
 
-Output from the network is a 512*512 which represents mask that should be learned. Sigmoid activation function
+Output from the network is a 256*256 which represents mask that should be learned. Sigmoid activation function
 makes sure that mask pixels are in \[0, 1\] range.
 
 # TEST
 To test the model, use the following example as a guide:
 ```
-python eval.py --data data/salmones/test --results data/salmones/test --weights /weights/best.hdf5
+python eval.py --data data/salmones/test --results /result --weights /weights/best.hdf5
 ```
 Where `--data` is the path to the dataset to test and  `--weights` is the path to the checkpoints (trained weights of the model).
 

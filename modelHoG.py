@@ -121,16 +121,29 @@ def main(debug=False):
 	testing_set = list()	# groundtruth imagenes
 	y = list()				# groundtruth clase
 	
+	# Open testing files
+	files = listdir('results')
 
-	for i in range(0, len(class_names)):
-		files = listdir('rois_HoG/'+class_names[i])
-		files.remove('template')
+	for f in files:
+		img = cv.imread('results/'+f)
+		testing_set.append( img )
 
-		for f in files:
-			img = cv.imread('rois_HoG/'+class_names[i]+'/'+f)
-			#r, img_th = cv.threshold(img, 128, 256, cv.THRESH_BINARY)
-			testing_set.append( img )
-			y.append(i)
+		clase = f.split("(")
+		clase = clase[0]	# salmon1, salmon10, etc..
+		clase_ = clase.split("salmon")
+		clase_ = clase_[1]
+		y.append( int(clase_) - 1 )
+
+		
+	# for i in range(0, len(class_names)):
+	# 	files = listdir('rois_HoG/'+class_names[i])
+	# 	files.remove('template')
+
+	# 	for f in files:
+	# 		img = cv.imread('rois_HoG/'+class_names[i]+'/'+f)
+	# 		#r, img_th = cv.threshold(img, 128, 256, cv.THRESH_BINARY)
+	# 		testing_set.append( img )
+	# 		y.append(i)
 
 	# Evaluate
 	y_hat = list()		# predictions
