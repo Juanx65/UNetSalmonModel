@@ -7,8 +7,8 @@ from pathlib import Path
 
 #names = ['salmon1','salmon2','salmon3','salmon4','salmon5','salmon6','salmon7','salmon8','salmon9','salmon10','salmon11']
 #for name in names:
-savepath = str( str(Path(__file__).parent) + '/dots')
-loadPath = str( str(Path(__file__).parent) + '/originals')
+savepath = str( str(Path(__file__).parent) + '/test_mask')
+loadPath = str( str(Path(__file__).parent) + '/test')
 
 archivos = os.listdir(str(loadPath))
 for arch in archivos:
@@ -16,6 +16,8 @@ for arch in archivos:
     img = cv.resize(img,(256,256))
     img = cv.medianBlur(img,5)
     th2 = cv.adaptiveThreshold(img,255,cv.ADAPTIVE_THRESH_MEAN_C,cv.THRESH_BINARY,11,4)
+
+    break
     result = cv.bitwise_not(th2)
     try:
         cv.imwrite( os.path.join(savepath , str(savepath+'/'+arch)),result )

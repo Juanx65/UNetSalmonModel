@@ -51,17 +51,14 @@ makes sure that mask pixels are in \[0, 1\] range.
 # TEST
 To test the model, use the following example as a guide:
 ```
-python eval.py --data data/salmones/test --results /result --weights /weights/best.hdf5
+python eval.py --data data/salmones/test_all --results /results --weights /weights/best.hdf5
 ```
 Where `--data` is the path to the dataset to test and  `--weights` is the path to the checkpoints (trained weights of the model).
 
 ###### `test.py` will display the confusion matrix of a given dataset for the checkpoints of the model.
 
 * Confusion Matrix on the training dataset:
-  ![confusion matrix of training dataset.](/images_readme/conf_roi_bench.png)
-
-* Confusion Matrix on a testing dataset:
-  ![confusion matrix of test dataset.](/images_readme/conf_roi_tests_bench.png)
+  ![confusion matrix of training dataset.](/imag/conf.png)
 
 
 # TRAIN
