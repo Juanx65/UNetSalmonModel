@@ -14,10 +14,16 @@ def eval(opt):
     model.load_weights(str(str(Path(__file__).parent) + opt.weights))
     archivos = os.listdir(str(opt.data))
     testGene = testGenerator(opt.data)
+
+     # Crear el directorio para resultados si no existe
+    if not os.path.exists(str(Path(__file__).parent) +'/'+str(opt.results)):
+        os.makedirs(str(Path(__file__).parent) +'/'+str(opt.results))
+
     t0 = time.time()
     results = model.predict_generator(testGene,len(archivos),verbose=1)
     t1 = time.time()
-    saveResult(opt.results,results, archivos)
+
+    saveResult((str(Path(__file__).parent) +'/'+str(opt.results)),results, archivos)
 
     print("tiempo UNet: ", t1-t0, " segundos")
     iou_promedio = 0

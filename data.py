@@ -120,7 +120,8 @@ def labelVisualize(num_class,color_dict,img):
 
 
 
-def saveResult(save_path,npyfile, archivos, flag_multi_class = False,num_class = 2):
-    for i,item in enumerate(npyfile):
-        img = labelVisualize(num_class,COLOR_DICT,item) if flag_multi_class else item[:,:,0]
-        io.imsave(os.path.join(save_path,archivos[i]),img)
+def saveResult(save_path, npyfile, archivos, flag_multi_class = False, num_class = 2):
+    for i, item in enumerate(npyfile):
+        img = labelVisualize(num_class, COLOR_DICT, item) if flag_multi_class else item[:,:,0]
+        img = (img * 255).astype(np.uint8) # Escala los valores a [0,255] y convierte a uint8
+        io.imsave(os.path.join(save_path, archivos[i]), img)
